@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gadget>
+	<name>DeciWatch</name>
+	<version>1.0</version>
+	<author name="Aaron Weatherly">
+		<info url="github.com/weatherman03"/>
+		<logo src="logo.jpg"/>
+	</author>
+	<copyright>© 2019</copyright>
+	<description>Who needs sexagesimal time anyway?!?</description>
+	<icons>
+		<icon src="icon.jpg"/>
+	</icons>
+	<hosts>
+		<host name="sidebar">
+			<base type="HTML" apiVersion="1.0.0" src="DeciWatch.html"/>
+			<permissions>Full</permissions>
+			<platform minPlatformVersion="1.0"/>
+		</host>
+	</hosts>
+</gadget>
