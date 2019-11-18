@@ -11,22 +11,22 @@ import android.widget.RemoteViews;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-
 /**
  * Implementation of App Widget functionality.
  */
 public class NewAppWidget extends AppWidgetProvider {
 
+    public static String WIDGET_UPDATE = "aaron.deciwatch.WIDGET_UPDATE";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        if (ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
+        if (WIDGET_UPDATE.equals(intent.getAction())) {
             ComponentName thisAppWidget = new ComponentName(context.getPackageName(), getClass().getName());
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int ids[] = appWidgetManager.getAppWidgetIds(thisAppWidget);
-            for (int appWidgetID : ids) {
+            for (int appWidgetID: ids) {
                 updateAppWidget(context, appWidgetManager, appWidgetID);
 
             }
@@ -34,7 +34,7 @@ public class NewAppWidget extends AppWidgetProvider {
     }
 
     private PendingIntent createClockTickIntent(Context context) {
-        Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
+        Intent intent = new Intent(WIDGET_UPDATE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         return pendingIntent;
@@ -74,12 +74,12 @@ public class NewAppWidget extends AppWidgetProvider {
         int dh = (int) (dec / 10000);
         int dm = (int) ((dec - dh * 10000) / 100);
         int ds = (int) (dec - dh * 10000 - dm * 100);
-        CharSequence widgetText = String.format(Locale.getDefault(),
+        String dtime = String.format(Locale.getDefault(),
                 "%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setTextViewText(R.id.widget_text, dtime);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

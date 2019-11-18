@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
             int dm = (int) ((dec - dh * 10000) / 100);
             int ds = (int) (dec - dh * 10000 - dm * 100);
             String dtime = String.format(Locale.getDefault(),
-                    "%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
+                    "\n%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
             myTextView.setText(dtime);
 
-            handler.postDelayed(runnable, 100);
+            handler.postDelayed(runnable, 1000);
         }
     };
 }
