@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             int sec = h * 3600 + m * 60 + s;
             int dec = (int) Math.floor(sec / 0.864);
             String sdate = String.format(Locale.getDefault(),
-                    "%05d.%05d", d, dec);
+                    "\nStarDate\n%05d.%05d", d, dec);
             myTextView.setText(sdate);
 
             handler.postDelayed(runnable, 1000);

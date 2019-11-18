@@ -3,20 +3,36 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="top|center_horizontal">
+    android:gravity="top|center_horizontal"
+    android:layout_margin="0dp"
+    android:background="#000000">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="\nStarDate:"
-        android:fontFamily="@font/cousine"
-        android:textSize="38sp"/>
     <TextView
         android:id="@+id/textView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="\nStarDate\n00000.00000"
         android:fontFamily="@font/cousine"
+        android:textColor="#FFFF00"
+        android:textAlignment="center"
         android:textSize="38sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=
+            "\nThis represents the number of days elapsed since 12 April 1961, the date on which Yuri Gagarin became the first human to journey into outer-space!
+            \n\nA decimal representation is used for inter-day timing, with each day being divided into 100,000 units, equal to 0.864 standard seconds each.
+            \n\nLive long and prosper!\n\n"
+        android:fontFamily="@font/cousine"
+        android:textColor="#FFFF00"
+        android:textSize="18sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/trek"/>
 
 </LinearLayout>

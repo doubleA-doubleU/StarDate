@@ -81,7 +81,7 @@ public class NewAppWidget extends AppWidgetProvider {
         int sec = h * 3600 + m * 60 + s;
         int dec = (int) Math.floor(sec / 0.864);
         String sdate = String.format(Locale.getDefault(),
-                " StarDate:\n%05d.%05d", d, dec);
+                "StarDate\n%05d.%05d", d, dec);
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
