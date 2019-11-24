@@ -15,9 +15,10 @@ function main() {
 	var h = date.getHours();
 	var m = date.getMinutes();
 	var s = date.getSeconds();
+	var ms = date.getMilliseconds();
 	
 	// convert time to seconds, then "dours/dinutes/deconds"
-	var sec = h*3600 + m*60 + s;
+	var sec = h*3600 + m*60 + s + ms/1000;
 	var dec = Math.floor(sec/0.864); // added Math.floor
 	
 	// construct StarDate as string

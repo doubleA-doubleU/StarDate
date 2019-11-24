@@ -1,11 +1,12 @@
 package aaron.deciwatch;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import java.util.Calendar;
+import org.joda.time.LocalDateTime;
+
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            int h = Calendar.getInstance().getTime().getHours();
-            int m = Calendar.getInstance().getTime().getMinutes();
-            int s = Calendar.getInstance().getTime().getSeconds();
-            int sec = h * 3600 + m * 60 + s;
-            double dec = sec / 0.864;
+            LocalDateTime today = new LocalDateTime();
+            int h = today.getHourOfDay();
+            int m = today.getMinuteOfHour();
+            int s = today.getSecondOfMinute();
+            int ms = today.getMillisOfSecond();
+            float sec = h * 3600 + m * 60 + s + (float) ms/1000;
+            int dec = (int) Math.floor(sec / 0.864);
+            int decond = (int) Math.round((1-(sec/.864)%1)*864);
             int dh = (int) (dec / 10000);
             int dm = (int) ((dec - dh * 10000) / 100);
             int ds = (int) (dec - dh * 10000 - dm * 100);
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     "\n%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
             myTextView.setText(dtime);
 
-            handler.postDelayed(runnable, 1000);
+            handler.postDelayed(runnable, decond);
         }
     };
 }

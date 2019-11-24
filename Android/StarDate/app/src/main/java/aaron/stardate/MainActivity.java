@@ -6,9 +6,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.joda.time.Days;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,23 +21,26 @@ public class MainActivity extends AppCompatActivity {
         myTextView = findViewById(R.id.textView01);
         handler.post(runnable);
     }
+
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            LocalDate dayZero = new LocalDate(1961,4,12);
-            LocalDate today = new LocalDate();
+            LocalDateTime dayZero = new LocalDateTime(1961,4,12,0,0,0,0);
+            LocalDateTime today = new LocalDateTime();
             int d = Days.daysBetween(dayZero, today).getDays();
-
-            int h = Calendar.getInstance().getTime().getHours();
-            int m = Calendar.getInstance().getTime().getMinutes();
-            int s = Calendar.getInstance().getTime().getSeconds();
-            int sec = h * 3600 + m * 60 + s;
+            int h = today.getHourOfDay();
+            int m = today.getMinuteOfHour();
+            int s = today.getSecondOfMinute();
+            int ms = today.getMillisOfSecond();
+            float sec = h * 3600 + m * 60 + s + (float) ms/1000;
             int dec = (int) Math.floor(sec / 0.864);
+            int decond = (int) Math.round((1-(sec/.864)%1)*864);
+
             String sdate = String.format(Locale.getDefault(),
                     "\nStarDate\n%05d.%05d", d, dec);
             myTextView.setText(sdate);
 
-            handler.postDelayed(runnable, 1000);
+            handler.postDelayed(runnable, decond);
         }
     };
 }

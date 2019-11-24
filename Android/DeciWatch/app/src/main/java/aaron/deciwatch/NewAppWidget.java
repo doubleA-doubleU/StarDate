@@ -1,60 +1,30 @@
 package aaron.deciwatch;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.widget.RemoteViews;
-import java.util.Calendar;
+import org.joda.time.LocalDateTime;
+
 import java.util.Locale;
 
-/**
- * Implementation of App Widget functionality.
- */
 public class NewAppWidget extends AppWidgetProvider {
-
-    public static String WIDGET_UPDATE = "aaron.deciwatch.WIDGET_UPDATE";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-
-        if (WIDGET_UPDATE.equals(intent.getAction())) {
-            ComponentName thisAppWidget = new ComponentName(context.getPackageName(), getClass().getName());
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int ids[] = appWidgetManager.getAppWidgetIds(thisAppWidget);
-            for (int appWidgetID: ids) {
-                updateAppWidget(context, appWidgetManager, appWidgetID);
-
-            }
-        }
-    }
-
-    private PendingIntent createClockTickIntent(Context context) {
-        Intent intent = new Intent(WIDGET_UPDATE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        return pendingIntent;
     }
 
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(createClockTickIntent(context));
     }
 
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 1);
-        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000, createClockTickIntent(context));
     }
 
     @Override
@@ -65,12 +35,15 @@ public class NewAppWidget extends AppWidgetProvider {
         }
     }
 
-    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        int h = Calendar.getInstance().getTime().getHours();
-        int m = Calendar.getInstance().getTime().getMinutes();
-        int s = Calendar.getInstance().getTime().getSeconds();
-        int sec = h * 3600 + m * 60 + s;
-        double dec = sec / 0.864;
+    public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
+        LocalDateTime today = new LocalDateTime();
+        int h = today.getHourOfDay();
+        int m = today.getMinuteOfHour();
+        int s = today.getSecondOfMinute();
+        int ms = today.getMillisOfSecond();
+        float sec = h * 3600 + m * 60 + s + (float) ms/1000;
+        int dec = (int) Math.floor(sec / .864);
+        int decond = (int) Math.round((1-(sec/.864)%1)*864);
         int dh = (int) (dec / 10000);
         int dm = (int) ((dec - dh * 10000) / 100);
         int ds = (int) (dec - dh * 10000 - dm * 100);
@@ -82,5 +55,11 @@ public class NewAppWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.widget_text, dtime);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        new Handler().postDelayed(new Runnable(){
+            public void run(){
+                updateAppWidget(context, appWidgetManager, appWidgetId);
+            }
+        },decond);
     }
 }

@@ -1,7 +1,7 @@
 function init() {
 	// format gadget size
-	document.body.style.width = 185;
-	document.body.style.height = 76;
+	document.body.style.width = 136;
+	document.body.style.height = 58;
 	
 	// run the main function
 	main();
@@ -13,9 +13,10 @@ function main() {
 	var h = date.getHours();
 	var m = date.getMinutes();
 	var s = date.getSeconds();
+	var ms = date.getMilliseconds();
 	
-	// convert time to seconds, then dours/dinutes/deconds
-	var sec = h*3600 + m*60 + s;
+	// convert time to seconds, then "dours/dinutes/deconds"
+	var sec = h*3600 + m*60 + s + ms/1000;
 	var dec = sec/0.864;
 	var dh = Math.floor(dec/10000);
 	var dm = Math.floor((dec - dh*10000)/100);
@@ -36,6 +37,6 @@ function main() {
 	document.getElementById("time").innerHTML = time;
 	document.getElementById("dtime").innerHTML = dtime;
 	
-	// update every 0.1 decimal seconds
-	setTimeout(main,86.4);
+	// update every 0.1 seconds
+	setTimeout(main,96);
 }
