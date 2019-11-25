@@ -9,21 +9,34 @@
 
     <TextView
         android:id="@+id/textView01"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="\nStarDate\n00000.00000"
         android:fontFamily="@font/cousine"
         android:textColor="#FFFF00"
-        android:textAlignment="center"
-        android:textSize="38sp"/>
+        android:textSize="38sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAlignment="center"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView02"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=
-            "\nThis represents the number of days elapsed since 12 April 1961, the date on which Yuri Gagarin became the first human to journey into outer-space!
-            \n\nA decimal representation is used for inter-day timing, with each day being divided into 100,000 units, equal to 0.864 standard seconds each.
-            \n\nLive long and prosper!\n\n"
+            "\nThis represents the number of days elapsed since 12-Apr-1961, the date on which Yuri Gagarin became the first human to journey into outer-space!
+            \n\nA decimal representation is used for inter-day timing, with each day being divided into 100,000 units, equal to 0.864 standard seconds each.\n"
+        android:fontFamily="@font/cousine"
+        android:textColor="#FFFF00"
+        android:textSize="18sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+
+    <TextView
+        android:id="@+id/textView03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The normal date and time is:\nWednesday, 12-Apr-1961, 00:00:00\n"
         android:fontFamily="@font/cousine"
         android:textColor="#FFFF00"
         android:textSize="18sp"
@@ -33,6 +46,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/trek"/>
+        android:src="@drawable/trek"
+        android:contentDescription="logo"
+        android:onClick="buttonPressed"/>
 
 </LinearLayout>

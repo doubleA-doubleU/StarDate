@@ -1,4 +1,4 @@
-package aaron.stardate;
+package aaron.deciwatch;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,13 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.widget.RemoteViews;
-import org.joda.time.Days;
 import org.joda.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
-public class NewAppWidget extends AppWidgetProvider {
+public class MainAppWidget extends AppWidgetProvider {
 
     private PendingIntent RepeatingIntent(Context context) {
         Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
@@ -69,22 +68,22 @@ public class NewAppWidget extends AppWidgetProvider {
     }
 
     public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
-        LocalDateTime dayZero = new LocalDateTime(1961,4,12,0,0,0,0);
         LocalDateTime today = new LocalDateTime();
-        int d = Days.daysBetween(dayZero, today).getDays();
         int h = today.getHourOfDay();
         int m = today.getMinuteOfHour();
         int s = today.getSecondOfMinute();
         int ms = today.getMillisOfSecond();
         float sec = h * 3600 + m * 60 + s + (float) ms/1000;
         int dec = (int) Math.floor(sec / .864);
-        int decond = (int) Math.round((1-(sec/.864)%1)*864);
-        String sdate = String.format(Locale.getDefault(),
-                "StarDate\n%05d.%05d", d, dec);
+        int dh = (int) (dec / 10000);
+        int dm = (int) ((dec - dh * 10000) / 100);
+        int ds = (int) (dec - dh * 10000 - dm * 100);
+        String dtime = String.format(Locale.getDefault(),
+                "%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
-        views.setTextViewText(R.id.widget_text, sdate);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_app_widget);
+        views.setTextViewText(R.id.main_widget_text, dtime);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -92,6 +91,6 @@ public class NewAppWidget extends AppWidgetProvider {
             public void run(){
                 updateAppWidget(context, appWidgetManager, appWidgetId);
             }
-        },decond);
+        },96);
     }
 }

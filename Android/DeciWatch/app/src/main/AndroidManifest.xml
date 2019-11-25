@@ -18,13 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="aaron.deciwatch.NewAppWidget">
+        <receiver android:name="aaron.deciwatch.MainAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/new_app_widget_info">
+                android:resource="@xml/main_app_widget_info">
             </meta-data>
         </receiver>
     </application>
