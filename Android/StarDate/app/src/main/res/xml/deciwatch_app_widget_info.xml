@@ -2,10 +2,12 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/deciwatch_app_widget"
     android:initialLayout="@layout/deciwatch_app_widget"
-    android:minWidth="165dp"
-    android:minHeight="80dp"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
     android:previewImage="@drawable/deciwatch_appwidget_preview"
-    android:resizeMode="none"
+    android:resizeMode="3"
+    android:minResizeWidth="40dp"
+    android:minResizeHeight="40dp"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen">
 </appwidget-provider>

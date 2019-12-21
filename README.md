@@ -1,4 +1,4 @@
-# DeciWatch 
+# Star*Date
 ##### _&copy; 2019 by Aaron Weatherly_
 <p><br></p>
 
@@ -30,7 +30,7 @@ A variation of this gadget/widget converts the decimal time into something resem
       style="margin-left:auto; margin-right:auto; display:block;"/>
 <br>
 </p>
-The Star*Date app also includes a basic button function to show/hide some additional information (and play a familiar sound effect) when clicked:
+The Android app also includes a basic button function to show/hide some additional information (and play a familiar sound effect) when clicked:
 <p>
 <img src="./Reference/images/screens.png" width="800"
       style="margin-left:auto; margin-right:auto; display:block;"/>
@@ -39,9 +39,8 @@ The Star*Date app also includes a basic button function to show/hide some additi
 <p><br></p>
 
 ### Installation:
-To install the Android apps and widgets, simply download the following .apk files and install directly to your Android device. You may have to enable 3rd party apps in your settings first.
-- [DeciWatch.apk][apk1]
-- [StarDate.apk][apk2]
+To install the Android app and widgets, simply download the following .apk file and install directly to your Android device. You may have to enable 3rd party apps in your settings first.
+- [StarDate.apk][apk]
 
 For the Windows gadgets, it depends on what version you are running. For older versions with the gadget features built in, Windows 7 for example, simply download the following .gadget files and double click on them to initiate the installation:
 - [DeciWatch.gadget][gad1]
@@ -270,8 +269,7 @@ public class MainAppWidget extends AppWidgetProvider {
 
 
 [wiki]:https://en.wikipedia.org/wiki/Sexagesimal
-[apk1]:https://github.com/weatherman03/DeciWatch/raw/master/Android/DeciWatch/app/release/DeciWatch.apk
-[apk2]:https://github.com/weatherman03/DeciWatch/raw/master/Android/StarDate/app/release/StarDate.apk
+[apk]:https://github.com/weatherman03/DeciWatch/raw/master/Android/StarDate/app/release/StarDate.apk
 [gad1]:https://github.com/weatherman03/DeciWatch/raw/master/Windows/DeciWatch.gadget
 [gad2]:https://github.com/weatherman03/DeciWatch/raw/master/Windows/StarDate/StarDate.gadget
 [win10]:https://github.com/weatherman03/DeciWatch/raw/master/Windows/DesktopGadgetsRevived-2.0.exe
