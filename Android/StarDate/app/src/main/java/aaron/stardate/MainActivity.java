@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             int dec = (int) Math.floor(sec / 0.864);
 
             String sdate = String.format(Locale.getDefault(),
-                    "\nStarDate\n%05d.%05d", sd, dec);
+                    "\nStar*Date\n%05d.%05d", sd, dec);
             myTextView1.setText(sdate);
 
             if (pressed==0){

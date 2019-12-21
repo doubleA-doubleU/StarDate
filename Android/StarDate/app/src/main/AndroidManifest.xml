@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
@@ -18,14 +19,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".NewAppWidget">
+
+        <receiver android:name=".StarDateAppWidget" android:label="Star*Date">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/new_app_widget_info" >
-            </meta-data>
+                android:resource="@xml/stardate_app_widget_info"/>
         </receiver>
+
+        <receiver android:name=".DeciWatchAppWidget" android:label="DeciWatch" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/deciwatch_app_widget_info" />
+        </receiver>
+
     </application>
+
 </manifest>

@@ -18,19 +18,19 @@ This is equally arbitrary, but much more mathematically pleasing IMHO.
 <p><br></p>
 
 ### Features:
-The original version of this project simply displayed the current local time in the 24 hour format as well as the associated decimal time:
+There are several gadgets/widgets available, and the most basic one simply displays the current local time in the 24 hour format as well as the associated decimal time:
 <p>
-<img src="./Reference/images/DeciWatch.png" width="400"
+<img src="./Reference/images/DeciWatch.png" height="150"
       style="margin-left:auto; margin-right:auto; display:block;"/>
 <br>
 </p>
-I then decided to nerd out a bit and add a Star Trek theme to a new iteration of the gadget/widget and convert the decimal time into something resembling a "StarDate":
+A variation of this gadget/widget converts the decimal time into something resembling a "Star*Date":
 <p>
-<img src="./Reference/images/StarDate.png" width="400"
+<img src="./Reference/images/StarDate.png" height="150"
       style="margin-left:auto; margin-right:auto; display:block;"/>
 <br>
 </p>
-The StarDate app also includes a basic button function to show/hide some additional information (and play a bonus sound effect) when clicked.
+The Star*Date app also includes a basic button function to show/hide some additional information (and play a familiar sound effect) when clicked:
 <p>
 <img src="./Reference/images/screens.png" width="800"
       style="margin-left:auto; margin-right:auto; display:block;"/>

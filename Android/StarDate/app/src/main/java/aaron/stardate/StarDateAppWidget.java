@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
-public class NewAppWidget extends AppWidgetProvider {
+public class StarDateAppWidget extends AppWidgetProvider {
 
     private PendingIntent RepeatingIntent(Context context) {
         Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
@@ -80,11 +80,11 @@ public class NewAppWidget extends AppWidgetProvider {
         int dec = (int) Math.floor(sec / .864);
         int decond = (int) Math.round((1-(sec/.864)%1)*864);
         String sdate = String.format(Locale.getDefault(),
-                "StarDate\n%05d.%05d", d, dec);
+                "Star*Date\n %05d.%05d ", d, dec);
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
-        views.setTextViewText(R.id.widget_text, sdate);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stardate_app_widget);
+        views.setTextViewText(R.id.stardate_widget_text, sdate);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
