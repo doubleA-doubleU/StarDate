@@ -1,6 +1,10 @@
 # Star*Date
 ##### _&copy; 2020 by Aaron Weatherly_
-<p><br></p>
+<p>
+<img src="./Reference/images/logo.png" height="200"
+	style="margin-left:auto; margin-right:auto; display:block;"/>
+<br>
+</p>
 
 ### Overview:
 Have you ever wondered why a day has 24 hours, each with 60 minutes, and 60 seconds per minute? That divides each day into **86,400** equal units of time... 
@@ -35,8 +39,8 @@ A variation of this gadget/widget converts the decimal time into something resem
 ### Installation:
 The Android widgets are available on Google Play*
 <p>
-<a href="https://play.google.com/store/apps/details?id=aaron.stardate" title="test">
-	<img src="./Reference/images/google-play-badge.png" height="150"
+<a href="https://play.google.com/store/apps/details?id=aaron.stardate" title="Get it on Google Play!">
+	<img src="./Reference/images/google-play-badge.png" width="300"
 		style="margin-left:auto; margin-right:auto; display:block;"/>
 </a>
 <br>
@@ -256,4 +260,4 @@ public class StarDateAppWidget extends AppWidgetProvider {
 [js]:https://github.com/weatherman03/StarDate/blob/master/Windows/src/DeciWatch.js
 [html]:https://github.com/weatherman03/StarDate/blob/master/Windows/src/DeciWatch.html
 [xml]:https://github.com/weatherman03/StarDate/blob/master/Android/StarDate/app/src/main/res/xml/stardate_app_widget_info.xml
-[java]:https://github.com/weatherman03/StarDate/blob/master/Android/StarDate/app/src/main/java/aaron/StarDate/StarDateAppWidget.java
+[java]:https://github.com/weatherman03/StarDate/blob/master/Android/StarDate/app/src/main/java/aaron/stardate/StarDateAppWidget.java
