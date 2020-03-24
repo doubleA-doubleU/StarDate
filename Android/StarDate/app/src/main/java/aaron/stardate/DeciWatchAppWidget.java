@@ -18,8 +18,7 @@ public class DeciWatchAppWidget extends AppWidgetProvider {
 
     private PendingIntent RepeatingIntent(Context context) {
         Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
@@ -49,14 +48,9 @@ public class DeciWatchAppWidget extends AppWidgetProvider {
         Calendar start = Calendar.getInstance();
         start.setTimeInMillis(System.currentTimeMillis());
         LocalDateTime now = new LocalDateTime();
-        int h = now.getHourOfDay();
-        int m = now.getMinuteOfHour();
-        int s = now.getSecondOfMinute();
-        int ms = now.getMillisOfSecond();
-        float sec = h * 3600 + m * 60 + s + (float) ms/1000;
-        int delay = (int) Math.round((100-(sec/.864)%100)*864);
+        int delay = 60000 - 1000*now.getSecondOfMinute() - now.getMillisOfSecond();
         start.add(Calendar.MILLISECOND, delay);
-        alarmManager.setRepeating(AlarmManager.RTC, start.getTimeInMillis(), 86400, RepeatingIntent(context));
+        alarmManager.setRepeating(AlarmManager.RTC, start.getTimeInMillis(), 60000, RepeatingIntent(context));
     }
 
     @Override
@@ -75,9 +69,9 @@ public class DeciWatchAppWidget extends AppWidgetProvider {
         int ms = today.getMillisOfSecond();
         float sec = h * 3600 + m * 60 + s + (float) ms/1000;
         int dec = (int) Math.floor(sec / .864);
-        int dh = (int) (dec / 10000);
-        int dm = (int) ((dec - dh * 10000) / 100);
-        int ds = (int) (dec - dh * 10000 - dm * 100);
+        int dh = (dec / 10000);
+        int dm = ((dec - dh * 10000) / 100);
+        int ds = (dec - dh * 10000 - dm * 100);
         String dtime = String.format(Locale.getDefault(),
                 "%02d:%02d:%02d\n %02d:%02d:%02d ", h, m, s, dh, dm, ds);
 

@@ -1,5 +1,5 @@
 # Star*Date
-##### _&copy; 2019 by Aaron Weatherly_
+##### _&copy; 2020 by Aaron Weatherly_
 <p><br></p>
 
 ### Overview:
@@ -7,7 +7,7 @@ Have you ever wondered why a day has 24 hours, each with 60 minutes, and 60 seco
 
 This seems pretty arbitrary to me, but it goes back to the ancient Sumerians and their [sexagesimal][wiki] (base 60) numbering system. Keeping time in this fashion has made sense for a long while, and all of us are well and used to it by now, but I think we can do better...
 
-This repository includes Windows gadgets and Android apps/widgets that allow for the telling of time in decimal format. That's right, base 10, as any reasonable measuring system ought to be in the modern era. To accomplish this, let's redefine our time steps so that there are **100,000** equal units in a day. And while we're at it, let's call these units "deconds" to alleviate any confusion between the decimal second and a sexagesimal second. Now we have:
+This repository includes Windows gadgets and Android widgets that allow for the telling of time in decimal format. That's right, base 10, as any reasonable measuring system ought to be in the modern era. To accomplish this, let's redefine our time steps so that there are **100,000** equal units in a day. And while we're at it, let's call these units "deconds" to alleviate any confusion between the decimal second and a sexagesimal second. Now we have:
 ```
 1 "decond" equals 0.864 seconds
 100 "deconds" equals 1 "dinute"
@@ -18,31 +18,31 @@ This is equally arbitrary, but much more mathematically pleasing IMHO.
 <p><br></p>
 
 ### Features:
-There are several gadgets/widgets available, and the most basic one simply displays the current local time in the 24 hour format as well as the associated decimal time:
+There are several gadgets/widgets available. The most basic one simply displays the current local time in the 24 hour format as well as the associated decimal time:
 <p>
 <img src="./Reference/images/DeciWatch.png" height="150"
-      style="margin-left:auto; margin-right:auto; display:block;"/>
+	style="margin-left:auto; margin-right:auto; display:block;"/>
 <br>
 </p>
 A variation of this gadget/widget converts the decimal time into something resembling a "Star*Date":
 <p>
 <img src="./Reference/images/StarDate.png" height="150"
-      style="margin-left:auto; margin-right:auto; display:block;"/>
-<br>
-</p>
-The Android app also includes a basic button function to show/hide some additional information (and play a familiar sound effect) when clicked:
-<p>
-<img src="./Reference/images/screens.png" width="800"
-      style="margin-left:auto; margin-right:auto; display:block;"/>
+	style="margin-left:auto; margin-right:auto; display:block;"/>
 <br>
 </p>
 <p><br></p>
 
 ### Installation:
-To install the Android app and widgets, simply download the following .apk file and install directly to your Android device. You may have to enable 3rd party apps in your settings first.
-- [StarDate.apk][apk]
+The Android widgets are available on Google Play*
+<p>
+<a href="https://play.google.com/store/apps/details?id=aaron.stardate" title="test">
+	<img src="./Reference/images/google-play-badge.png" height="150"
+		style="margin-left:auto; margin-right:auto; display:block;"/>
+</a>
+<br>
+</p>
 
-For the Windows gadgets, it depends on what version you are running. For older versions with the gadget features built in, Windows 7 for example, simply download the following .gadget files and double click on them to initiate the installation:
+For the Windows gadgets, it depends on what version you are running. For older versions with the gadget features built in, Windows 7 for example, simply download the following .gadget files and double click on them to initiate the installation.
 - [DeciWatch.gadget][gad1]
 - [StarDate.gadget][gad2]
 
@@ -149,26 +149,11 @@ And is called from an [html][html] file:
 ```
 <p><br></p>
 
-Porting the same functionality over to the Android side of things was a bit more complicated. The calculations are the same, just adapted for `Java` using `Joda-Time`. Here is a snippet from the `updateAppWidget` method of the widget provider class:
-```java
-LocalDateTime today = new LocalDateTime();
-int h = today.getHourOfDay();
-int m = today.getMinuteOfHour();
-int s = today.getSecondOfMinute();
-int ms = today.getMillisOfSecond();
-float sec = h * 3600 + m * 60 + s + (float) ms/1000;
-int dec = (int) Math.floor(sec / .864);
-int dh = (int) (dec / 10000);
-int dm = (int) ((dec - dh * 10000) / 100);
-int ds = (int) (dec - dh * 10000 - dm * 100);
-String dtime = String.format(Locale.getDefault(),
-	"\n%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
-```
-Where it gets interesting is in updating the widgets at regular intervals. The minimum standard update interval for Android widgets is 30 minutes, which is set by including `android:updatePeriodMillis="1800000"` in the [resource file][xml]. 
+Porting the same functionality over to the Android side of things was a bit more complicated. The calculations are the same, just adapted for `Java` using `Joda-Time`. Where it gets interesting is in updating the widgets at regular intervals. The minimum standard update interval for Android widgets is 30 minutes, which is set by including `android:updatePeriodMillis="1800000"` in the [resource file][xml]. 
 
-We want updates at least every "decond" in this case, or 864 milliseconds, so the standard approach is insufficient. To get around this, the widget updates are done primarily with a `Handler` at an interval of 96 milliseconds. This is occasionally killed by the OS, so I also use an `AlarmManager` to trigger the update every "dinute". If the updates stop for any reason, you should only have to wait a maximum of 86.4 seconds before regular updates resume. See [MainAppWidget.java][java] for the full solution:
+We want updates at least every "decond" in this case, or 864 milliseconds, so the standard approach is insufficient. To get around this, the widget updates are done primarily with a `Handler` at an interval of 96 milliseconds. This is occasionally killed by the OS, so I also use an `AlarmManager` to trigger the update every minute. If the updates stop for any reason, this should cause the regular updates to resume. See [StarDateAppWidget.java][java] for the full solution:
 ```java
-package aaron.deciwatch;
+package aaron.stardate;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -179,17 +164,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.widget.RemoteViews;
+import org.joda.time.Days;
 import org.joda.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
-public class MainAppWidget extends AppWidgetProvider {
+public class StarDateAppWidget extends AppWidgetProvider {
 
     private PendingIntent RepeatingIntent(Context context) {
         Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
@@ -219,14 +204,9 @@ public class MainAppWidget extends AppWidgetProvider {
         Calendar start = Calendar.getInstance();
         start.setTimeInMillis(System.currentTimeMillis());
         LocalDateTime now = new LocalDateTime();
-        int h = now.getHourOfDay();
-        int m = now.getMinuteOfHour();
-        int s = now.getSecondOfMinute();
-        int ms = now.getMillisOfSecond();
-        float sec = h * 3600 + m * 60 + s + (float) ms/1000;
-        int delay = (int) Math.round((100-(sec/.864)%100)*864);
+        int delay = 60000 - 1000*now.getSecondOfMinute() - now.getMillisOfSecond();
         start.add(Calendar.MILLISECOND, delay);
-        alarmManager.setRepeating(AlarmManager.RTC, start.getTimeInMillis(), 86400, RepeatingIntent(context));
+        alarmManager.setRepeating(AlarmManager.RTC, start.getTimeInMillis(), 60000, RepeatingIntent(context));
     }
 
     @Override
@@ -238,22 +218,22 @@ public class MainAppWidget extends AppWidgetProvider {
     }
 
     public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
+        LocalDateTime dayZero = new LocalDateTime(1961,4,12,0,0,0,0);
         LocalDateTime today = new LocalDateTime();
+        int d = Days.daysBetween(dayZero, today).getDays();
         int h = today.getHourOfDay();
         int m = today.getMinuteOfHour();
         int s = today.getSecondOfMinute();
         int ms = today.getMillisOfSecond();
         float sec = h * 3600 + m * 60 + s + (float) ms/1000;
         int dec = (int) Math.floor(sec / .864);
-        int dh = (int) (dec / 10000);
-        int dm = (int) ((dec - dh * 10000) / 100);
-        int ds = (int) (dec - dh * 10000 - dm * 100);
-        String dtime = String.format(Locale.getDefault(),
-                "%02d:%02d:%02d\n%02d:%02d:%02d", h, m, s, dh, dm, ds);
+        int decond = (int) Math.round((1-(sec/.864)%1)*864);
+        String sdate = String.format(Locale.getDefault(),
+                "Star*Date\n %05d.%05d ", d, dec);
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_app_widget);
-        views.setTextViewText(R.id.main_widget_text, dtime);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stardate_app_widget);
+        views.setTextViewText(R.id.stardate_widget_text, sdate);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -261,20 +241,19 @@ public class MainAppWidget extends AppWidgetProvider {
             public void run(){
                 updateAppWidget(context, appWidgetManager, appWidgetId);
             }
-        },96);
+        },decond);
     }
 }
 ```
 <p><br></p>
-
+*Google Play and the Google Play logo are trademarks of Google LLC.
 
 [wiki]:https://en.wikipedia.org/wiki/Sexagesimal
-[apk]:https://github.com/weatherman03/DeciWatch/raw/master/Android/StarDate/app/release/StarDate.apk
-[gad1]:https://github.com/weatherman03/DeciWatch/raw/master/Windows/DeciWatch.gadget
-[gad2]:https://github.com/weatherman03/DeciWatch/raw/master/Windows/StarDate/StarDate.gadget
-[win10]:https://github.com/weatherman03/DeciWatch/raw/master/Windows/DesktopGadgetsRevived-2.0.exe
-[py]:https://github.com/weatherman03/DeciWatch/blob/master/Reference/Old%20Code/decimal_time_v2.py
-[js]:https://github.com/weatherman03/DeciWatch/blob/master/Windows/src/DeciWatch.js
-[html]:https://github.com/weatherman03/DeciWatch/blob/master/Windows/src/DeciWatch.html
-[xml]:https://github.com/weatherman03/DeciWatch/blob/master/Android/DeciWatch/app/src/main/res/xml/main_app_widget_info.xml
-[java]:https://github.com/weatherman03/DeciWatch/blob/master/Android/DeciWatch/app/src/main/java/aaron/deciwatch/MainAppWidget.java
+[gad1]:https://github.com/weatherman03/StarDate/raw/master/Windows/DeciWatch.gadget
+[gad2]:https://github.com/weatherman03/StarDate/raw/master/Windows/StarDate/StarDate.gadget
+[win10]:https://github.com/weatherman03/StarDate/raw/master/Windows/DesktopGadgetsRevived-2.0.exe
+[py]:https://github.com/weatherman03/StarDate/blob/master/Reference/Old%20Code/decimal_time_v2.py
+[js]:https://github.com/weatherman03/StarDate/blob/master/Windows/src/DeciWatch.js
+[html]:https://github.com/weatherman03/StarDate/blob/master/Windows/src/DeciWatch.html
+[xml]:https://github.com/weatherman03/StarDate/blob/master/Android/StarDate/app/src/main/res/xml/stardate_app_widget_info.xml
+[java]:https://github.com/weatherman03/StarDate/blob/master/Android/StarDate/app/src/main/java/aaron/StarDate/StarDateAppWidget.java

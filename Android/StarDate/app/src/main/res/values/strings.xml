@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Star*Date</string>
+    <string name="sd_default_text">\u0020\u0020Star*Date\n\u002009754.33333\u0020</string>
+    <string name="dw_default_text">\u002008:00:00\n\u002003:33:33\u0020</string>
 </resources>

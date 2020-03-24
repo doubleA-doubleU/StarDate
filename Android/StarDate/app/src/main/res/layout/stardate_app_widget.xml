@@ -10,11 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg1"
-        android:text="Star*Date\n 09754.33333 "
+        android:text="@string/sd_default_text"
         android:fontFamily="@font/cousine"
         android:textAlignment="center"
         android:textColor="#FFFF00"
-        android:textSize="38sp">
+        android:textSize="38sp" >
     </TextView>
 
 </LinearLayout>
