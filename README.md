@@ -24,7 +24,7 @@ This is equally arbitrary, but much more mathematically pleasing IMHO.
 ### Features:
 There are several gadgets/widgets available. The most basic one simply displays the current local time in the 24 hour format as well as the associated decimal time:
 <p>
-<img src="./Reference/images/DeciWatch.png" height="150"
+<img src="./Reference/images/DualTime.png" height="150"
 	style="margin-left:auto; margin-right:auto; display:block;"/>
 <br>
 </p>

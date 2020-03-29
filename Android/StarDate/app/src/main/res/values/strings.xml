@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Star*Date</string>
     <string name="sd_default_text">\u0020\u0020Star*Date\n\u002009754.33333\u0020</string>
-    <string name="dw_default_text">\u002008:00:00\n\u002003:33:33\u0020</string>
+    <string name="dec_default_text">\u00209:99:99\u0020</string>
+    <string name="dual_default_text">\u002008:00:00\n\u002003:33:33\u0020</string>
+    <string name="std12_default_text">\u002011:59:59 PM\u0020</string>
+    <string name="std24_default_text">\u002023:59:59\u0020</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
