@@ -15,7 +15,8 @@
         <receiver
             android:name=".StarDateAppWidget"
             android:label="Star*Date"
-            tools:ignore="Instantiatable">
+            tools:ignore="Instantiatable"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -26,7 +27,8 @@
         </receiver>
         <receiver
             android:name=".DecimalTimeAppWidget"
-            android:label="DecimalTime">
+            android:label="DecimalTime"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -37,7 +39,8 @@
         </receiver>
         <receiver
             android:name=".DualTimeAppWidget"
-            android:label="DualTime">
+            android:label="DualTime"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -48,7 +51,8 @@
         </receiver>
         <receiver
             android:name=".Standard12hrAppWidget"
-            android:label="Standard12hr">
+            android:label="Standard12hr"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -59,7 +63,8 @@
         </receiver>
         <receiver
             android:name=".Standard24hrAppWidget"
-            android:label="Standard24hr">
+            android:label="Standard24hr"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
